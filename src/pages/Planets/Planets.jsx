@@ -1,6 +1,14 @@
-import { Card, CardContent, CardHeader, Container, makeStyles, Typography } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Container,
+  makeStyles,
+  Typography
+} from "@material-ui/core";
 import { LoadingBar } from '../../common';
 import useRequestData from "./useRequestData";
+import PlanetTable from "./PlanetTable"
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -39,9 +47,7 @@ const Planets = () => {
     }
 
     return (
-      <Typography variant="h6">
-        Oh cool, found {planets.length} planets
-      </Typography>
+       <PlanetTable planets={planets} />
     );
   };
 

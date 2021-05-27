@@ -14,8 +14,7 @@ const useRequestData = () => {
 				const res = await fetch(SWAPI_PLANETS_URL);
 				const data = await res.json();
 				if (data.results && Array.isArray(data.results)) {
-          setError("Oh no!");
-					// setPlanets(data.results);
+					setPlanets(data.results);
 				}
 				setLoading(false);
 			} catch (e) {
