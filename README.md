@@ -10,7 +10,7 @@ I built this project using
  - npm 6.14.5
 
 ### Configuring your Environment
-By default, the webserver will listen for requests on port 3000. If you want to change that, add a top-level file called `.env` to the project an specify your prefered port. For example:
+By default, the webserver will listen for requests on port 3000. If you want to change that, add a top-level file called `.env` to the project and specify your prefered port. For example:
 
 ```
 -- .env --
@@ -30,4 +30,4 @@ Run the following to start the app
 npm start
 ```
 
-If `react-scripts` doesn't automatically navigate you to the webapp in an open browser session, navigate to `http://localhost:3000/` in your favorite web browser
+If `react-scripts` doesn't automatically navigate you to the webapp in an open browser session, navigate to `http://localhost:<YOUR_PORT>/` in your favorite web browser
