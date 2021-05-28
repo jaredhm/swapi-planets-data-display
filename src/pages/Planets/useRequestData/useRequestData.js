@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import validateResponse from './validateResponse';
 
-const SWAPI_PLANETS_URL = "https://swapi.dev/api/planets/";
+const SWAPI_PLANETS_URL = "https://swapi.dev/api/planets";
 
 const useRequestData = () => {
 	const [planets, setPlanets] = useState([]);
@@ -12,14 +13,19 @@ const useRequestData = () => {
 			setLoading(true);
 			try {
 				const res = await fetch(SWAPI_PLANETS_URL);
+				if (!res.ok) {
+					setError("Request failed");
+				}
 				const data = await res.json();
-				if (data.results && Array.isArray(data.results)) {
+				if (validateResponse(data)) {
 					setPlanets(data.results);
+				} else {
+					setError("Unexpected response data");
 				}
 				setLoading(false);
 			} catch (e) {
-				setError(e);
-        setLoading(false);
+				setError(e.message);
+				setLoading(false);
 			}
 		}
 		requestData();

@@ -1,52 +1,27 @@
 /**
- * 
-    The planet's name
-        The name should be a link that, when clicked, opens the planet's API URL in a new window
-    The planet's climate
-    How many residents the planet has
-    The terrains found on the planet
-    The population
-    The surface area (in km2) covered by water
-        Assume that all planets are perfect spheres.
-        The radius of a sphere is half its diameter.
-        The value of surface_water from the API is a percentage, so a value of 50 means the planet is 50% covered in water.
-        Round these values to the nearest integer value.
-	--
-		"name": "Tatooine", 
-    "rotation_period": "23", 
-    "orbital_period": "304", 
-    "diameter": "10465", 
-    "climate": "arid", 
-    "gravity": "1 standard", 
-    "terrain": "desert", 
-    "surface_water": "1", 
-    "population": "200000", 
-    "residents": [
-        "http://swapi.dev/api/people/1/", 
-        "http://swapi.dev/api/people/2/", 
-        "http://swapi.dev/api/people/4/", 
-        "http://swapi.dev/api/people/6/", 
-        "http://swapi.dev/api/people/7/", 
-        "http://swapi.dev/api/people/8/", 
-        "http://swapi.dev/api/people/9/", 
-        "http://swapi.dev/api/people/11/", 
-        "http://swapi.dev/api/people/43/", 
-        "http://swapi.dev/api/people/62/"
-    ], 
-    "films": [
-        "http://swapi.dev/api/films/1/", 
-        "http://swapi.dev/api/films/3/", 
-        "http://swapi.dev/api/films/4/", 
-        "http://swapi.dev/api/films/5/", 
-        "http://swapi.dev/api/films/6/"
-    ], 
-    "created": "2014-12-09T13:50:49.641000Z", 
-    "edited": "2014-12-20T20:58:18.411000Z", 
-    "url": "http://swapi.dev/api/planets/1/"
+  The planet's name
+      The name should be a link that, when clicked, opens the planet's API URL in a new window
+  The planet's climate
+  How many residents the planet has
+  The terrains found on the planet
+  The population
+  The surface area (in km2) covered by water
+      Assume that all planets are perfect spheres.
+      The radius of a sphere is half its diameter.
+      The value of surface_water from the API is a percentage, so a value of 50 means the planet is 50% covered in water.
+      Round these values to the nearest integer value.
  */
 
+import { Link } from "@material-ui/core";
+
+const UNKNOWN_VALUE = "unknown";
+
 const tryParseFloat = (value) => {
-  if (value === null || value === undefined) {
+  if (
+    value === null ||
+    value === undefined ||
+    value === UNKNOWN_VALUE
+  ) {
     return null;
   }
   const parsed = parseFloat(value);
@@ -54,11 +29,26 @@ const tryParseFloat = (value) => {
 }
 
 const tryParseInteger = (value) => {
-  if (value === null || value === undefined) {
+  if (
+    value === null ||
+    value === undefined ||
+    value === UNKNOWN_VALUE
+  ) {
     return null;
   }
   const parsed = parseFloat(value);
   return isNaN(parsed) ? null : parsed;
+}
+
+const formatString = (value) => {
+  if (
+    value === null ||
+    value === undefined ||
+    value === UNKNOWN_VALUE
+  ) {
+    return "?"
+  }
+  return value;
 }
 
 const getTableDefinition = () => {
@@ -70,13 +60,27 @@ const getTableDefinition = () => {
       name: {
         title: "Name",
         formatData: (planet) => {
-          return planet.name || "?";
+          const { url, name } = planet;
+          if (
+            url === null ||
+            url === undefined
+          ) {
+            return name || "?";
+          }
+          return (
+            <Link
+              target="_blank"
+              href={url}
+            >
+              {name}
+            </Link>
+          )
         },
       },
       climate: {
         title: "Climate",
         formatData: (planet) => {
-          return planet.climate || "?"
+          return formatString(planet.climate)
         }
       },
       numResidents: {
@@ -94,7 +98,7 @@ const getTableDefinition = () => {
       terrains: {
         title: "Terrain(s)",
         formatData: (planet) => {
-          return planet.terrain || "?";
+          return formatString(planet.terrain);
         }
       },
       population: {
