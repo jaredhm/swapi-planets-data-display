@@ -46,9 +46,29 @@ const formatString = (value) => {
     value === undefined ||
     value === UNKNOWN_VALUE
   ) {
-    return "?"
+    return "?";
   }
   return value;
+}
+
+const formatNumber = (value) => {
+  if(
+    typeof value !== "number"
+  ) {
+    return "?";
+  }
+  // I can't think of more clever way to do this
+  let i = 1;
+  const digitsReverse = `${value}`.split("");
+  return digitsReverse.reduceRight((acc, cur) => {
+    i++;
+    if (i === 3) {
+      i = 0;
+      return ` ${cur}${acc}`;
+    } else {
+      return `${cur}${acc}`;
+    }
+  });
 }
 
 const getTableDefinition = () => {
@@ -63,16 +83,17 @@ const getTableDefinition = () => {
           const { url, name } = planet;
           if (
             url === null ||
-            url === undefined
+            url === undefined ||
+            url === UNKNOWN_VALUE
           ) {
-            return name || "?";
+            return formatString(name);
           }
           return (
             <Link
               target="_blank"
               href={url}
             >
-              {name}
+              {formatString(name)}
             </Link>
           )
         },
@@ -92,7 +113,7 @@ const getTableDefinition = () => {
           ) {
             return "?";
           }
-          return planet.residents.length;
+          return formatNumber(planet.residents.length);
         }
       },
       terrains: {
@@ -108,7 +129,7 @@ const getTableDefinition = () => {
             planet.population
           );
           return typeof populationInteger === "number"
-            ? populationInteger
+            ? formatNumber(populationInteger)
             : "?";
         }
       },
@@ -126,8 +147,10 @@ const getTableDefinition = () => {
           }
           const totalSurfaceArea =
             Math.PI * diameterFloat * diameterFloat;
-          return Math.round(
-            totalSurfaceArea * (surfaceWaterFloat / 100)
+          return formatNumber(
+            Math.round(
+              totalSurfaceArea * (surfaceWaterFloat / 100)
+            )
           );
         }
       }

@@ -24,7 +24,18 @@ const Planets = () => {
 
   const renderContent = () => {
     if (loading) {
-      return <LoadingBar color="secondary" />
+      return (
+        <>
+          <LoadingBar color="secondary" />
+          <Card>
+            <CardContent>
+              <Typography variant="h6">
+                Loading
+              </Typography>
+            </CardContent>
+          </Card>
+        </>
+      );
     }
 
     if (error) {
