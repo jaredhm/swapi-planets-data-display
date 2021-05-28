@@ -1,11 +1,11 @@
 import {
   Card,
-	Table,
-	TableBody,
-	TableCell,
+  Table,
+  TableBody,
+  TableCell,
   TableContainer,
-	TableHead,
-	TableRow,
+  TableHead,
+  TableRow,
 } from '@material-ui/core';
 
 import getTableDefinition from './getTableDefinition';

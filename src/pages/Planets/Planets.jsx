@@ -51,14 +51,14 @@ const Planets = () => {
     );
   };
 
-	return (
+  return (
       <Container
         className={classes.container}
         maxWidth="lg"
       >
         {renderContent()}
       </Container>
-	)
+  )
 };
 
 export default Planets;
