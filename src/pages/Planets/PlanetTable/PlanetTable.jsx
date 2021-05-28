@@ -27,7 +27,7 @@ const PlanetTable = ({ planets }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {planets.map((planet) => (
+          {planets.sort(tableDefinition.compareRows).map((planet) => (
             <TableRow key={tableDefinition.getRowKey(planet)}>
               {Object.values(tableDefinition.columns).map(({ title, formatData }) => {
                 return (

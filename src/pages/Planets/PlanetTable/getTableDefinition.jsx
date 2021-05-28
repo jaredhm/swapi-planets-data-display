@@ -73,6 +73,28 @@ const formatNumber = (value) => {
 
 const getTableDefinition = () => {
   return {
+    compareRows: (planetA, planetB) => {
+      const { name: nameA } = planetA;
+      const { name: nameB } = planetB;
+
+      if (
+        nameA === null ||
+        nameA === undefined ||
+        nameA === UNKNOWN_VALUE
+      ) {
+        return 1;
+      }
+
+      if(
+        nameB === null ||
+        nameB === undefined ||
+        nameB === UNKNOWN_VALUE
+      ) {
+        return -1;
+      }
+
+      return nameA.localeCompare(nameB);
+    },
     getRowKey: (planet) => {
       return planet.created;
     },
